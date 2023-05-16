@@ -4,18 +4,38 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Orders {
+@NoArgsConstructor
+public class Orders implements Printable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne
+    private CustomerDetails customerDetails;
 
+    @OneToMany
+    private List<Product> products;
+    private double totalPrice;
+
+    public Orders(CustomerDetails customerDetails, List<Product> products) {
+        this.customerDetails = customerDetails;
+        this.products = products;
+        this.totalPrice = calculateTotalPrice(products);
+    }
+
+    private double calculateTotalPrice(List<Product> products) {
+        return products.stream().map(Product::getPrice).reduce(0.0, Double::sum);
+    }
+
+    @Override
+    public void print() {
+        System.out.println("Customer details: " + customerDetails.toString());
+        System.out.println("Products: ");
+        products.forEach(Printable::print);
+    }
 }
