@@ -13,21 +13,8 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product implements Printable {
+public class PaymentDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-    private double price;
-
-    @Override
-    public void print() {
-        System.out.println("Product: " + name);
-        System.out.println("Price: " + price);
-    }
-
-    public double getPrice() {
-        return price;
-    }
 }

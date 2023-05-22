@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,17 @@ public class Orders implements Printable {
     @OneToMany
     private List<Product> products;
     private double totalPrice;
+
+
+    private Long customerId;
+    private Long deliveryManId;
+
+    @OneToOne
+    private Orders orders;
+    private LocalDateTime dateTime;
+    private String paymentMethod;
+    @OneToOne
+    private PaymentDetails paymentDetails;
 
     public Orders(CustomerDetails customerDetails, List<Product> products) {
         this.customerDetails = customerDetails;

@@ -20,6 +20,9 @@ public class DeliveryMan implements Printable {
     private String lastName;
     private String phoneNumber;
 
+    @ElementCollection
+    private List<String> areaCode;
+
     @OneToMany
     List<Orders> orders;
 
