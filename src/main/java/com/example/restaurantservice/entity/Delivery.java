@@ -13,11 +13,19 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDetails {
+public class Delivery implements Printable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+    private Integer id;
+    private String deliveryName;
+    private String areaCode;
+
+//    @OneToMany(mappedBy = "delivery")
+//    private List<OrderProduct> orderProducts;
+
+    @Override
+    public void print() {
+        System.out.println("Delivery: " + deliveryName);
+        System.out.println("Area code: " + areaCode);
+    }
 }

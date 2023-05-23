@@ -13,8 +13,14 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentDetails {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+    private String customerName;
+    private String customerLocation;
+    private String customerType;
+
+//    @OneToMany(mappedBy = "customer")
+//    private List<OrderProduct> orderProduct;
 }
