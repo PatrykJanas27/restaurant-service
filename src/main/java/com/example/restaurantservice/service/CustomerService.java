@@ -1,8 +1,8 @@
 package com.example.restaurantservice.service;
 
-import com.example.restaurantservice.dto.CustomerDetailsDto;
+import com.example.restaurantservice.dto.CustomerDto;
 import com.example.restaurantservice.dtoMapper.CustomerDetailsDtoMapper;
-import com.example.restaurantservice.entity.CustomerDetails;
+import com.example.restaurantservice.entity.Customer;
 import com.example.restaurantservice.repository.CustomerDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,16 +11,18 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerDetailsService {
+public class CustomerService {
     private final CustomerDetailsRepository customerDetailsRepository;
     private final CustomerDetailsDtoMapper customerDetailsDtoMapper;
-    Optional<CustomerDetailsDto> getCustomerDetailsById(Long id) {
+
+    Optional<CustomerDto> getCustomerDetailsById(Integer id) {
         return customerDetailsRepository.findById(id)
                 .map(customerDetailsDtoMapper::map);
     }
-    CustomerDetailsDto saveCustomerDetails(CustomerDetailsDto customerDetailsDto){
-        CustomerDetails customerDetails = customerDetailsDtoMapper.map(customerDetailsDto);
-        CustomerDetails savedCustomerDetails = customerDetailsRepository.save(customerDetails);
-        return customerDetailsDtoMapper.map(savedCustomerDetails);
+
+    CustomerDto saveCustomerDetails(CustomerDto customerDto) {
+        Customer customer = customerDetailsDtoMapper.map(customerDto);
+        Customer savedCustomer = customerDetailsRepository.save(customer);
+        return customerDetailsDtoMapper.map(savedCustomer);
     }
 }

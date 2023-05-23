@@ -1,19 +1,20 @@
 package com.example.restaurantservice.dtoMapper;
 
-import com.example.restaurantservice.dto.OrdersDto;
-import com.example.restaurantservice.entity.Orders;
+import com.example.restaurantservice.dto.OrderProductDto;
+import com.example.restaurantservice.entity.OrderProduct;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrdersDtoMapper {
-    public OrdersDto map(Orders orders){
-        OrdersDto ordersDto = new OrdersDto();
-        ordersDto.setId(ordersDto.getId());
-        return ordersDto;
+    public OrderProductDto map(OrderProduct orders) {
+        OrderProductDto orderProductDto = new OrderProductDto();
+        orderProductDto.setId(orderProductDto.getId());
+        return orderProductDto;
     }
-    public Orders map(OrdersDto ordersDto){
-        Orders orders = new Orders();
-        orders.setId(ordersDto.getId());
-        return orders;
+
+    public OrderProduct map(OrderProductDto orderProductDto) {
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setId(orderProductDto.getId());
+        return orderProduct;
     }
 }

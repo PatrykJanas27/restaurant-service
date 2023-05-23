@@ -1,7 +1,7 @@
 package com.example.restaurantservice.repository;
 
-import com.example.restaurantservice.entity.Orders;
+import com.example.restaurantservice.entity.OrderProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrdersRepository extends JpaRepository<Orders,Long> {
+public interface OrdersRepository extends JpaRepository<OrderProduct, Integer> {
 }

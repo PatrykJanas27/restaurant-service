@@ -3,5 +3,6 @@ package com.example.restaurantservice.dto;
 import lombok.Data;
 
 @Data
-public class ProductDto {
+public class OrderProductDto {
+    private Integer id;
 }
