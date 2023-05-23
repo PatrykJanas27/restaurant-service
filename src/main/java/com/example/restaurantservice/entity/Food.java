@@ -19,9 +19,9 @@ public class Food implements Printable {
     private String description;
     private Double price; // TODO: change to BigDecimal
 
-    @ManyToOne
-    @JoinColumn(name = "order_product_id")
-    private OrderProduct orderProduct;
+//    @ManyToOne
+//    @JoinColumn(name = "order_product_id")
+//    private OrderProduct orderProduct;
 
     @Override
     public void print() {

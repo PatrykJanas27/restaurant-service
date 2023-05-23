@@ -25,6 +25,9 @@ public class OrderProduct implements Printable {
 //    @OneToMany(mappedBy = "orderProduct") // TODO: it should be at the food side
 //    private List<Food> foods;
 
+    @ManyToMany
+    private List<Food> foods;
+
     @ManyToOne
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
