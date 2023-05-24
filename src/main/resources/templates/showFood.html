@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jedzenie</title>
+</head>
+<body>
+<div id="container">
+    <a href="#" th:href="@{/index}"><button type="button">Welcome page</button></a>
+    <h1>Pokaz jedzenie</h1>
+    <table>
+        <tr th:each="Food : ${foods}">
+            <td th:text="${Food.name}"></td>
+            <td th:text="${Food.description}"></td>
+            <td th:text="${Food.price}"></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>
