@@ -37,7 +37,7 @@ public class OrderProduct implements Printable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private double calculateTotalPrice(List<Food> foods) {
+    public double calculateTotalPrice(List<Food> foods) {
         return foods.stream().map(Food::getPrice).reduce(0.0, Double::sum);
     }
 
@@ -47,4 +47,5 @@ public class OrderProduct implements Printable {
         System.out.println("Products: ");
 //        foods.forEach(Printable::print);
     }
+
 }

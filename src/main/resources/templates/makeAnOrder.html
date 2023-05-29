@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Make An Order</title>
+</head>
+<body>
+<form action="#" th:action="@{/submitOrder}" method="post">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Select</th>
+            <th>Quantity</th>
+        </tr>
+        <tr th:each="food : ${foods}">
+            <td th:text="${food.name}"></td>
+            <td th:text="${food.price}"></td>
+            <td><input type="checkbox" th:value="${food.id}" th:name="selectedFoods"/></td>
+            <td><input type="number" min="1" th:name="${'quantity' + food.id}"/></td>
+        </tr>
+    </table>
+    <button type="submit">Submit Order</button>
+</form>
+</body>
+</html>
