@@ -1,0 +1,38 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add food</title>
+    <link href="../static/main.css" th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <a href="#" th:href="@{/index}"><button type="button">Welcome page</button></a>
+    <h1>Type your data in the form to make an order</h1>
+    <h1>Add food to the database</h1>
+    <form method="post" action="/showPageToMakeAnOrder2" th:object="${customerDto}">
+        <label>
+            name
+            <input th:field="*{customerName}" type="text" placeholder="name">
+        </label>
+        <label>
+            Address
+            <input th:field="*{customerLocation}" type="text" placeholder="Address">
+        </label>
+        <label for="customerType">Choose your sex:</label>
+        <select name="customerType" id="customerType">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Undefined">Undefined</option>
+        </select>
+        <button type="submit">Make an order</button>
+    </form>
+</div>
+</body>
+</html>

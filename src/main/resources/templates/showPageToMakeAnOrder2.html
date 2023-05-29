@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jedzenie</title>
+    <link href="../static/main.css" th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+    <a href="#" th:href="@{/index}">
+        <button type="button">Welcome page</button>
+    </a>
+    <h1>Dane uzytkownika</h1>
+    <table>
+        <tr th:object="${customerDto}">
+            <td th:text="*{customerName}"></td>
+            <td th:text="*{customerLocation}"></td>
+            <td th:text="*{customerType}"></td>
+        </tr>
+    </table>
+    <h1>Pokaz jedzenie</h1>
+    <form method="post" action="/submitAnOrder" th:object="${customerDto}" >
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Select</th>
+            </tr>
+            </thead>
+            <tbody id="foodList">
+            <tr th:each="Food : ${allFoodFromRepository}">
+                <td th:text="${Food.name}"></td>
+                <td th:text="${Food.description}"></td>
+                <td th:text="${Food.price}"></td>
+                <td>
+                    <input type="checkbox" name="selectedFood" th:value="${Food.name}" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

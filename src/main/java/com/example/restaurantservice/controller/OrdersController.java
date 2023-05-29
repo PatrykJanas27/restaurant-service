@@ -1,7 +1,9 @@
 package com.example.restaurantservice.controller;
 
 import com.example.restaurantservice.dto.CustomerDto;
+import com.example.restaurantservice.dto.FoodDto;
 import com.example.restaurantservice.dto.InputFoodDto;
+import com.example.restaurantservice.entity.Customer;
 import com.example.restaurantservice.entity.Food;
 import com.example.restaurantservice.entity.OrderProduct;
 import com.example.restaurantservice.repository.CustomerRepository;
@@ -54,36 +56,30 @@ public class OrdersController {
         return "showFood";
     }
 
-    @GetMapping("/makeAnOrder")
-    public String showData(Model model) {
-        model.addAttribute("foods", foodRepository.findAll());
-        return "makeAnOrder";
+    @GetMapping("/showPageToMakeAnOrder1")
+    public String showPageToMakeAnOrder1(Model model) {
+        model.addAttribute("customerDto", new CustomerDto());
+        return "showPageToMakeAnOrder1";
     }
 
-    @PostMapping("/submitOrder")
-    public String submitOrder(@RequestParam("selectedFoods") List<Integer> selectedFoods, HttpServletRequest request, Model model) {
-        OrderProduct order = new OrderProduct();
-        List<Food> foods = new ArrayList<>();
-        for (Integer id : selectedFoods) {
-            String quantityStr = request.getParameter("quantity" + id);
-            int quantity = Integer.parseInt(quantityStr);
-            Food food = foodRepository.findById(id).orElse(null);
-            if (food != null) {
-                foods.add(food);
-            }
-        }
-        order.setFoods(foods);
-        order.setOrderTotalPrice(order.calculateTotalPrice(foods));
-        // Set other fields of the order...
-        // Save the order to the database
-        ordersRepository.save(order);
-        model.addAttribute("order", order);
-        return "orderConfirmation";
+
+
+    @PostMapping("/showPageToMakeAnOrder2")
+    public String showPageToMakeAnOrder2(@ModelAttribute CustomerDto customerDto, Model model) {
+        model.addAttribute("customerDto", customerDto);
+        System.out.println(customerDto.getCustomerName());
+        System.out.println(customerDto.getCustomerLocation());
+        model.addAttribute("allFoodFromRepository", foodRepository.findAll());
+        return "showPageToMakeAnOrder2";
     }
 
-    @PostMapping("/appointment/save")
-    public String saveAppointment(@ModelAttribute CustomerDto customerDto) {
-        // Save the customerDto...
-        return "redirect:/makeAnOrder";
+    @PostMapping("/submitAnOrder")
+    public String submitAnOrder(@ModelAttribute("customerDto") CustomerDto customerDto,
+                                @RequestParam(name = "selectedFood", required = false) List<String> selectedFood
+    ) {
+        System.out.println(customerDto.getCustomerName());
+        System.out.println(selectedFood.get(0));
+        return "redirect:/index";
     }
+
 }
