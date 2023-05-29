@@ -5,7 +5,7 @@ import com.example.restaurantservice.entity.Customer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerDetailsDtoMapper {
+public class CustomerDtoMapper {
     public CustomerDto map(Customer customerDetails) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customerDetails.getId());

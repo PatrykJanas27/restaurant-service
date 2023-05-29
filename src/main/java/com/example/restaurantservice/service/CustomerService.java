@@ -1,7 +1,7 @@
 package com.example.restaurantservice.service;
 
 import com.example.restaurantservice.dto.CustomerDto;
-import com.example.restaurantservice.dtoMapper.CustomerDetailsDtoMapper;
+import com.example.restaurantservice.dtoMapper.CustomerDtoMapper;
 import com.example.restaurantservice.entity.Customer;
 import com.example.restaurantservice.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +13,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final CustomerDetailsDtoMapper customerDetailsDtoMapper;
+    private final CustomerDtoMapper customerDtoMapper;
 
     Optional<CustomerDto> getCustomerDetailsById(Integer id) {
         return customerRepository.findById(id)
-                .map(customerDetailsDtoMapper::map);
+                .map(customerDtoMapper::map);
     }
 
     CustomerDto saveCustomerDetails(CustomerDto customerDto) {
-        Customer customer = customerDetailsDtoMapper.map(customerDto);
+        Customer customer = customerDtoMapper.map(customerDto);
         Customer savedCustomer = customerRepository.save(customer);
-        return customerDetailsDtoMapper.map(savedCustomer);
+        return customerDtoMapper.map(savedCustomer);
     }
 }
