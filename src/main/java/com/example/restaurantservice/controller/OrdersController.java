@@ -3,11 +3,6 @@ package com.example.restaurantservice.controller;
 import com.example.restaurantservice.dto.CustomerDto;
 import com.example.restaurantservice.dto.InputFoodDto;
 import com.example.restaurantservice.entity.Food;
-import com.example.restaurantservice.repository.FoodRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import com.example.restaurantservice.dto.CustomerDto;
-import com.example.restaurantservice.entity.Food;
 import com.example.restaurantservice.entity.OrderProduct;
 import com.example.restaurantservice.repository.CustomerRepository;
 import com.example.restaurantservice.repository.FoodRepository;
@@ -16,8 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +22,6 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class OrdersController {
-    private final FoodRepository foodRepository;
     private final FoodRepository foodRepository;
     private final OrdersRepository ordersRepository;
     private final CustomerRepository customerRepository;
