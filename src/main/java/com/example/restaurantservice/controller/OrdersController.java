@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,16 @@ public class OrdersController {
         System.out.println(customerDto.getCustomerName());
         System.out.println(customerDto.getCustomerLocation());
         model.addAttribute("allFoodFromRepository", foodRepository.findAll());
+
+        Customer customer = new Customer();
+        customer.setCustomerLocation(customerDto.getCustomerLocation());
+        customer.setCustomerName(customerDto.getCustomerName());
+        customer.setCustomerType(customerDto.getCustomerType());
+        customerRepository.saveAndFlush(customer);
+        OrderProduct order = new OrderProduct();
+        order.setCustomer(customer);
+        ordersRepository.saveAndFlush(order);
+
         return "showPageToMakeAnOrder2";
     }
 
@@ -78,8 +89,16 @@ public class OrdersController {
                                 @RequestParam(name = "selectedFood", required = false) List<String> selectedFood
     ) {
         System.out.println(customerDto.getCustomerName());
-        System.out.println(selectedFood.get(0));
-        return "redirect:/index";
+        selectedFood.forEach(System.out::println);
+        OrderProduct lastOrder = ordersRepository.findAll().get(ordersRepository.findAll().size() - 1);
+        List<Food> foods = lastOrder.getFoods();
+        for (String foodDto : selectedFood) {
+            foods.add(foodRepository.findByName(foodDto));
+        }
+        lastOrder.setOrderDate(LocalDateTime.now());
+        ordersRepository.saveAndFlush(lastOrder);
+
+        return "index";
     }
 
 }

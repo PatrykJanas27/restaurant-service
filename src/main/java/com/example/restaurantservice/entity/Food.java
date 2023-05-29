@@ -19,7 +19,13 @@ public class Food implements Printable {
     private String description;
     private Double price; // TODO: change to BigDecimal
 
-//    @ManyToOne
+    public Food(String name, String description, Double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    //    @ManyToOne
 //    @JoinColumn(name = "order_product_id")
 //    private OrderProduct orderProduct;
 
