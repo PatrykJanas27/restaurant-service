@@ -1,7 +1,6 @@
 package com.example.restaurantservice.controller;
 
 import com.example.restaurantservice.dto.CustomerDto;
-import com.example.restaurantservice.dto.InputFoodDto;
 import com.example.restaurantservice.entity.Food;
 import com.example.restaurantservice.entity.OrderProduct;
 import com.example.restaurantservice.repository.CustomerRepository;
