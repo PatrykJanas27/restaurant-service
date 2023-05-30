@@ -1,7 +1,6 @@
 package com.example.restaurantservice.controller;
 
 import com.example.restaurantservice.dto.CustomerDto;
-import com.example.restaurantservice.dto.FoodDto;
 import com.example.restaurantservice.dto.InputFoodDto;
 import com.example.restaurantservice.entity.Customer;
 import com.example.restaurantservice.entity.Food;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -64,7 +61,6 @@ public class OrdersController {
     }
 
 
-
     @PostMapping("/showPageToMakeAnOrder2")
     public String showPageToMakeAnOrder2(@ModelAttribute CustomerDto customerDto, Model model) {
         model.addAttribute("customerDto", customerDto);
@@ -80,25 +76,30 @@ public class OrdersController {
         OrderProduct order = new OrderProduct();
         order.setCustomer(customer);
         ordersRepository.saveAndFlush(order);
-
         return "showPageToMakeAnOrder2";
     }
 
     @PostMapping("/submitAnOrder")
     public String submitAnOrder(@ModelAttribute("customerDto") CustomerDto customerDto,
-                                @RequestParam(name = "selectedFood", required = false) List<String> selectedFood
+                                @RequestParam(name = "selectedFood", required = false) List<String> selectedFood,
+                                Model model
     ) {
         System.out.println(customerDto.getCustomerName());
         selectedFood.forEach(System.out::println);
         OrderProduct lastOrder = ordersRepository.findAll().get(ordersRepository.findAll().size() - 1);
         List<Food> foods = lastOrder.getFoods();
+        Double totalPrice = 0.0;
         for (String foodDto : selectedFood) {
-            foods.add(foodRepository.findByName(foodDto));
+            Food byName = foodRepository.findByName(foodDto);
+            foods.add(byName);
+            totalPrice += byName.getPrice();
         }
+        lastOrder.setOrderTotalPrice(totalPrice);
         lastOrder.setOrderDate(LocalDateTime.now());
         ordersRepository.saveAndFlush(lastOrder);
-
-        return "index";
+        model.addAttribute("order", ordersRepository.findAll().get(ordersRepository.findAll().size() - 1));
+        return "showOrder";
     }
+
 
 }

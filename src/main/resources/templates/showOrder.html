@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jedzenie</title>
+    <link href="../static/main.css" th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <a href="#" th:href="@{/index}"><button type="button">Welcome page</button></a>
+    <h1>Potwierdzenie zamowienia</h1>
+    <table>
+        <label>
+            Customer name
+            <input th:field="*{order.customer.customerName}" type="text" placeholder="name">
+        </label>
+        <label>
+            Location
+            <input th:field="*{order.customer.customerLocation}" type="text" placeholder="Address">
+        </label>
+        <label>
+            Customer Type
+            <input th:field="*{order.customer.customerType}" type="text" placeholder="Address">
+        </label>
+        <table>
+            <tr th:each="Food : ${order.foods}">
+                <td th:text="${Food.name}"></td>
+                <td th:text="${Food.description}"></td>
+                <td th:text="${Food.price}"></td>
+            </tr>
+        </table>
+        <label>
+            Order Date
+            <input th:field="*{order.orderDate}" type="text" placeholder="Address">
+        </label>
+        <label>
+            Total Price
+            <input th:field="*{order.orderTotalPrice}" type="text" placeholder="Address">
+        </label>
+    </table>
+</div>
+</body>
+</html>
