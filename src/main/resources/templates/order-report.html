@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Report</title>
+    <link href="../static/main.css" th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <h1>Order Report</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Order Date</th>
+            <th>Customer Name</th>
+            <th>Customer Location</th>
+            <th>Customer Type</th>
+            <th>Order Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.customer.customerName}"></td>
+            <td th:text="${order.customer.customerLocation}"></td>
+            <td th:text="${order.customer.customerType}"></td>
+            <td th:text="${order.orderTotalPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

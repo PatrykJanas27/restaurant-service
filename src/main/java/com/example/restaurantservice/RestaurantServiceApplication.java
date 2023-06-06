@@ -14,6 +14,8 @@ public class RestaurantServiceApplication {
 		FoodRepository foodRepository = run.getBean(FoodRepository.class);
 		foodRepository.save(new Food(1, "hot-dog", "z ketchupem", 30.0));
 
+
+
 	}
 
 }

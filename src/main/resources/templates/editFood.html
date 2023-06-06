@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Food Item</title>
+    <link href="../static/main.css" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <h1>Edit Food Item</h1>
+    <form th:action="@{/saveFood}" method="post" th:object="${food}">
+        <input type="hidden" th:field="${food.id}">
+        <label>
+            Name:
+            <input type="text" th:field="${food.name}" required>
+        </label>
+        <label>
+            Description:
+            <input type="text" th:field="${food.description}" required>
+        </label>
+        <label>
+            Price:
+            <input type="number" step="0.01" th:field="${food.price}" required>
+        </label>
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>

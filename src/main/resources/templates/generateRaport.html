@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Report Generator</title>
+    <link href="../static/main.css" th:href="@{/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <h1>Order Report Generator</h1>
+    <form th:action="@{/generateReport}" method="post">
+        <label>
+            From Date:
+            <input type="text" th:field="${orderReportInput.fromDate}">
+        </label>
+        <label>
+            To Date:
+            <input type="text" th:field="${orderReportInput.toDate}">
+        </label>
+        <button type="submit">Generate Report</button>
+    </form>
+</div>
+</body>
+</html>

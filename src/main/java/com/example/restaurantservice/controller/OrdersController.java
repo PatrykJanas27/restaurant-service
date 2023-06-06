@@ -11,13 +11,15 @@ import com.example.restaurantservice.repository.OrdersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.Order;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -100,6 +102,61 @@ public class OrdersController {
         model.addAttribute("order", ordersRepository.findAll().get(ordersRepository.findAll().size() - 1));
         return "showOrder";
     }
+
+    @GetMapping("/orderRaport")
+    public String orderRaport(Model model) {
+        model.addAttribute("orders", ordersRepository.findAll());
+        return "orderRaport";
+    }
+
+    @GetMapping("/editFood/{foodId}")
+    public String editFood(@PathVariable("foodId") Integer foodId, Model model) {
+        // Retrieve the food item by its ID from your data source (e.g., database)
+        Optional<Food> food = foodRepository.findById(foodId);
+        if(food.isEmpty()){
+            throw new RuntimeException("there is no food with this id");
+        }
+
+        model.addAttribute("food", food);
+        return "editFood"; // Return the name of the HTML template for editing food
+    }
+
+    @PostMapping("/saveFood")
+    @Transactional
+    public String saveFood(@ModelAttribute("food") Food food) {
+        // Update the food item in your data source (e.g., database)
+        Optional<Food> byId = foodRepository.findById(food.getId());
+        Food food1 = byId.get();
+        food1.setPrice(food.getPrice());
+        food1.setName(food.getName());
+        food1.setDescription(food.getDescription());
+        return "index"; // Redirect to the food listing page after saving the changes
+    }
+
+    @GetMapping("/generateReportWithDate")
+    public String generateReportWithDate(Model model){
+        model.addAttribute("orderReportInput", new OrderReportInput());
+        return "generateRaport";
+    }
+
+    @PostMapping("/generateReport")
+    public String generateReport(@ModelAttribute("orderReportInput") OrderReportInput orderReportInput, Model model) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime fromDate = LocalDateTime.parse(orderReportInput.getFromDate() + "T00:00:00", formatter);
+        LocalDateTime toDate = LocalDateTime.parse(orderReportInput.getToDate()+ "T23:59:59", formatter);
+        System.out.println(fromDate);
+        System.out.println(toDate);
+
+
+        // Retrieve the orders within the specified date range from your data source (e.g., database)
+        List<OrderProduct> orders = ordersRepository.findAllByOrderDateAfterAndOrderDateBefore(fromDate, toDate);
+
+        model.addAttribute("orders", orders);
+        return "order-report"; // Return the name of the HTML template to display the order report
+    }
+
+
+
 
 
 }
